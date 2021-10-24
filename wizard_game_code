@@ -247,12 +247,12 @@ namespace WizardGameCCP
                     // In this game you can't heal over the amount of health you start with and the program accounts for that
                     // by stopping the player from healing if the result of using the heal spell will put
                     // them over their starting health amount. 
-                    if(playerOneHealth >= 96)
+                    if(playerOneHealth >= 91)
                     {
                         Console.WriteLine("\nYou can't heal past a wizards starting health.");
                         Console.WriteLine("Alatars starting health is 100, and your current health is " + playerOneHealth + ".");
                         playerOneHealth += 0;
-                    } else if(playerOneHealth < 96)
+                    } else if(playerOneHealth < 91)
                     {
                         // This chunk of code is the process of the player actually getting healed
                         // Healing also uses spell slots, so this follows the same process as the previous spells
@@ -355,11 +355,12 @@ namespace WizardGameCCP
                     // In this game you can't heal over the amount of health you start with and the program accounts for that
                     // by stopping the player from healing if the result of using the heal spell will put
                     // them over their starting health amount. 
-                    if(playerTwoHealth >= 96)
+                    if(playerTwoHealth >= 86)
                     {
                         Console.WriteLine("\nYou can't heal past a wizards starting health.");
                         Console.WriteLine(playerTwo.healingName + "s starting health is 100, and your current health is " + playerTwoHealth + ".");
-                    } else if(playerTwoHealth < 96)
+                        playerTwoHealth += 0;
+                    } else if(playerTwoHealth < 86)
                     {
                         // This chunk of code is the process of the player actually getting healed
                         // Healing also uses spell slots, so this follows the same process as the previous spells
