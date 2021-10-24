@@ -23,7 +23,9 @@ namespace WizardGameCCP
         // a user to restore this wizards spell slots which can run out from using spells in the game.
         // The method can only be used if the user has less spell slots than what they start with,
         // and there is proper output to the user if they try to this method while at
-        // full spell slots during the game.       
+        // full spell slots during the game. 
+        // There is also a certain output if the user tries to meditate
+        // to go beyond the amount of spell slots they start with.      
         public void DestructionMeditate()
         {
             if(destructionSpellSlots < 4)
@@ -32,7 +34,11 @@ namespace WizardGameCCP
                 Console.WriteLine("\n" + destructionName + " is meditating.\nAlatars spell slots have gone up to " + destructionSpellSlots);
             } else if(destructionSpellSlots == 6)
             {
-                Console.WriteLine("You are at max spell slots. You can't meditate.");
+                Console.WriteLine("\nYou are at max spell slots. You can't meditate.");
+            } else if (destructionSpellSlots > 4 && destructionSpellSlots < 6)
+            {
+                Console.WriteLine("\nYou cannot meditate past 6 spell slots.");
+                Console.WriteLine("Alatar can only meditate if they are below 4 spell slots");
             }
         }
 
@@ -93,6 +99,8 @@ namespace WizardGameCCP
         // The method can only be used if the user has less spell slots than what they start with,
         // and there is proper output to the user if they try to this method while at
         // full spell slots during the game.
+        // There is also a certain output if the user tries to meditate
+        // to go beyond the amount of spell slots they start with. 
         public void HealingMeditate()
         {
             if(healingSpellSlots < 3)
@@ -101,7 +109,11 @@ namespace WizardGameCCP
                 Console.WriteLine("\n" + healingName + " is meditating.\nOzirs spell slots have gone up to " + healingSpellSlots);
             } else if(healingSpellSlots == 4)
             {
-                Console.WriteLine("You are at max spell slots. You can't meditate.");
+                Console.WriteLine("\nYou are at max spell slots. You can't meditate.");
+            } else if (healingSpellSlots == 3)
+            {
+                Console.WriteLine("\nYou cannot meditate past 4 spell slots.");
+                Console.WriteLine("Ozir can only meditate if they are below 3 spell slots");
             }
         }
        
