@@ -1,0 +1,412 @@
+using System;
+using System.Collections.Generic;
+
+namespace WizardGameCCP
+{
+    // Class made for a type of wizard that I called a destruction wizard.
+    // This class creates data that the wizard classes need,
+    // but this destruction wizard has predetermined variable values that are specific to this class.
+    class DestructionWizard
+    {
+        // The data types reference the kind of spells, spell slots (amount of spells that can be used),
+        // and the name of the wizard.
+        // You can also see a variable named "experience" that I never use in this program.
+        // The amount of time that it would take to get the "experience" system working was
+        // too much, so I didn't do it to move onto other projects,
+        // but I left it in as a comment to remember it in case I want to come back to it.
+        public string destructionName = "Alatar";
+        public string[] destructionSpells = {"firebolt", "snowball", "shock", "windblast", "heal"};
+        public int destructionSpellSlots = 6;
+        //public float destructionExperience = 0f;
+    
+        // This method gives functionality to the "meditate" spell which allows
+        // a user to restore this wizards spell slots which can run out from using spells in the game.
+        // The method can only be used if the user has less spell slots than what they start with,
+        // and there is proper output to the user if they try to this method while at
+        // full spell slots during the game.       
+        public void DestructionMeditate()
+        {
+            if(destructionSpellSlots < 4)
+            {
+                destructionSpellSlots += 3;
+                Console.WriteLine("\n" + destructionName + " is meditating.\nAlatars spell slots have gone up to " + destructionSpellSlots);
+            } else if(destructionSpellSlots == 6)
+            {
+                Console.WriteLine("You are at max spell slots. You can't meditate.");
+            }
+        }
+
+        // NOTE: The functionality of this method applies to the rest of the methods below in this class, but
+        // they all have different names.
+        // This method is a spell that a user can attack another wizard with to deal damage.
+        // The user is told how much damage they did to the other wizard,
+        // and the amount of spell slots it cost to use that spell.
+        // The method also interally stores the new amount of spell slots the player actually has after using the method.
+        public void Firebolt()
+        {
+                Console.WriteLine("\n" + destructionName + " uses firebolt for 15 damage");
+                Console.WriteLine("-2 Spell Slot");
+                destructionSpellSlots -= 2;
+                Console.WriteLine("You have " + destructionSpellSlots + " spell slots left\n");
+        }
+
+        public void Snowball()
+        {
+                Console.WriteLine("\n" + destructionName + " uses snowball for 10 damage");
+                Console.WriteLine("-1 Spell Slot");
+                destructionSpellSlots -= 1;
+                Console.WriteLine("You have " + destructionSpellSlots + " spell slots left\n");
+        }
+
+        public void Shock()
+        {
+            Console.WriteLine("\n" + destructionName + " uses shock for 5 damage");
+            Console.WriteLine("-0 Spell Slot");
+            destructionSpellSlots -= 0;
+            Console.WriteLine("You have " + destructionSpellSlots + " spell slots left\n"); 
+        }
+
+        public void Windblast()
+        {
+                Console.WriteLine("\n" + destructionName + " uses windblast for 10 damage");
+                Console.WriteLine("-1 Spell Slot");
+                destructionSpellSlots -= 1;
+                Console.WriteLine("You have " + destructionSpellSlots + " spell slots left\n");
+        }
+    }
+   
+    // Class made for a type of wizard that I called a healing wizard.
+    // This class creates data that the wizard classes need,
+    // but this healing wizard class has predetermined variable values that are specific to this class.
+    class HealingWizard
+    {
+        // The data types reference the kind of spells, spell slots (amount of spells that can be used),
+        // and the name of the wizard.
+        // The "experience" variable is in this class and commented out for the same reason stated in the destruction wizard class.
+        public string healingName = "Ozir";
+        public string[] healingSpells = {"heal", "divine", "holynova", "deathstrike"};
+        public int healingSpellSlots = 4;
+        //public float healingExperience = 0f;
+
+        // This method gives functionality to the "meditate" spell which allows
+        // a user to restore this wizards spell slots which can run out from using spells in the game.
+        // The method can only be used if the user has less spell slots than what they start with,
+        // and there is proper output to the user if they try to this method while at
+        // full spell slots during the game.
+        public void HealingMeditate()
+        {
+            if(healingSpellSlots < 3)
+            {
+                healingSpellSlots += 2;
+                Console.WriteLine("\n" + healingName + " is meditating.\nOzirs spell slots have gone up to " + healingSpellSlots);
+            } else if(healingSpellSlots == 4)
+            {
+                Console.WriteLine("You are at max spell slots. You can't meditate.");
+            }
+        }
+       
+        // NOTE: The functionality of this method applies to the rest of the methods below in this class, but
+        // they all have different names.
+        // This method is a spell that a user can attack another wizard with to deal damage.
+        // The user is told how much damage they did to the other wizard,
+        // and the amount of spell slots it cost to use that spell.
+        // The method also interally stores the new amount of spell slots the player actually has after using the method.
+        public void Divine()
+        {
+            Console.WriteLine("\n" + healingName + " uses divine for 5 damage");
+            Console.WriteLine("-0 Spell Slot");
+            Console.WriteLine("You have " + healingSpellSlots + " spell slots left\n");
+            healingSpellSlots -= 0;
+        }
+
+        public void Holynova()
+        {
+                Console.WriteLine("\n" + healingName + " uses holynova for 10 damage");
+                Console.WriteLine("-1 Spell Slot");
+                healingSpellSlots -= 1;
+                Console.WriteLine("You have " + healingSpellSlots + " spell slots left\n");
+        }
+
+        public void Deathstrike()
+        {
+                Console.WriteLine("\n" + healingName + " uses deathstrike for 25 damage");
+                Console.WriteLine("-4 Spell Slots");
+                healingSpellSlots -= healingSpellSlots;
+                Console.WriteLine("You have " + healingSpellSlots + " spell slots left\n");
+        }
+    }
+   
+    class Program
+    {
+        static void Main(string[] args)
+        {  
+            // These two lines call the classes and assign the data within those classes to two different variables.
+            // The classes are assigned to these two variables, to predetermine which player is which wizard.
+            // The users playing the game can of course choose who uses each wizard, but they don't choose by giving input to the program. 
+            // That is predetermind here.          
+            DestructionWizard playerOne = new DestructionWizard();
+            HealingWizard playerTwo = new HealingWizard();
+           
+            // The following lines of code that start with Console.WriteLine
+            // are used to tell the users the very basics of the game from 
+            // the most important information and rules as well as telling the user that the game has started.
+            Console.WriteLine("Welcome to the Wizard Game.");
+            Console.WriteLine("\nThis is a 2 player game where you and another person play as wizards and duel to the death.");
+            Console.WriteLine("Player One is the destruction wizard named Alatar.\nPlayer Two will be the healing wizard named Ozir.\n");
+
+            Console.WriteLine("Rules of the game: ");
+            Console.WriteLine("Player One starts with 6 spell slots, and Player Two starts with 4 spell slots.");
+            Console.WriteLine("Casting spells uses up spell slots, but you can meditate to regain lost spell slots.");
+            Console.WriteLine("Both wizards start with 100 health.");
+            Console.WriteLine("Player one will go first and player two goes second.");
+            Console.WriteLine("Turns will alternate, and making any move during your turn will use up that turn.");
+            Console.WriteLine("To make a move during your turn, you type Attack, Heal, or Meditate.");
+            Console.WriteLine("Attacking allows you to use a spell that deals damage, healing allows you to restore some of your wizards health, and meditating allows you to restore some of your wizards spell slots.");
+            Console.WriteLine("\nNOTICE: You can type 'Help' at any point during the game to get more information about your wizard.");
+            Console.WriteLine("\nThe game is now starting.");
+            Console.WriteLine("\nBegin.");
+           
+            // These variables are used to assign each players health which will be used later.
+            int playerOneHealth = 100;
+            int playerTwoHealth = 100;
+            
+            // This while loop is used to go through and give intial output to the user, and 
+            // to get input and give more output based on what the user has inputted. 
+            // This while loop works while neither player is dead (neither players health variable is 0).
+            while(playerOneHealth > 0 && playerTwoHealth > 0)
+            {
+                // Asks what the player will do 
+                // and then prompts the user to input what they would like to do
+                // and converts the input to all lower case.
+                // I convert all user input to lower case to make creating if statements
+                // based on user input more simple. 
+                Console.Write("\nWhat will " + playerOne.destructionName + " (player one) do: ");
+                string playerOneMove = Console.ReadLine().ToLower();
+                
+                // This long if statement determines what will happen in different scenarios 
+                // based on if the user inputs the word attack.
+                if(playerOneMove == "attack")
+                {
+                    // These two lines ask the reader to type in what attack they want to use
+                    // and stores the users input in a variable.
+                    Console.Write("Type Firebolt, Snowball, Shock, or Windblast to use an attack: ");
+                    string playerOneAttack = Console.ReadLine().ToLower();
+                    
+                    // If the user inputs firebolt, and they have enough spell slots to use that spell,
+                    // then the program calls the firebolt method, states how much damage the opposing wizard has taken,
+                    // takes that health away from the opposing wizards health variable
+                    // and checks to see if the new health is below 0, then it displays
+                    // the opposing wizards health.
+                    // If the opposing wizard that is getting damaged has their health drop below 0 after an attack,
+                    // the variable that their health is stored in will default to 0, 
+                    // so that the program doesn't display the wizard having negative health. 
+                    // The program also checks for and has output predetermined for the user
+                    // if they try to use a spell that they don't have enough spell slots for.
+                    
+                    // This process is used for all other attacking spells that the player might use in their turn. 
+                    if(playerOneAttack == "firebolt" && playerOne.destructionSpellSlots >= 2)
+                    {
+                        playerOne.Firebolt();
+                        Console.WriteLine("Ozir has taken 15 damage");
+                        playerTwoHealth = Math.Max(playerTwoHealth - 15, 0);
+                        Console.WriteLine("Ozirs health is now " + playerTwoHealth);
+                    } else if(playerOneAttack == "firebolt" && playerOne.destructionSpellSlots < 2)
+                    {
+                        Console.WriteLine("\nYou don't have enoughs spell slots to use this spell.");
+                        Console.WriteLine("Meditate to regain spell slots.");
+                    } else if(playerOneAttack == "snowball" && playerOne.destructionSpellSlots >= 1)
+                    {
+                        playerOne.Snowball();
+                        Console.WriteLine("Ozir has taken 10 damage");
+                        playerTwoHealth = Math.Max(playerTwoHealth - 10, 0);
+                        Console.WriteLine("Ozirs health is now " + playerTwoHealth);
+                    } else if(playerOneAttack == "snowball" && playerOne.destructionSpellSlots < 1)
+                    {
+                        Console.WriteLine("\nYou don't have enoughs spell slots to use this spell.");
+                        Console.WriteLine("Meditate to regain spell slots.");
+                    } else if(playerOneAttack == "shock")
+                    {
+                        playerOne.Shock();
+                        Console.WriteLine("Ozir has taken 5 damage");
+                        playerTwoHealth = Math.Max(playerTwoHealth - 5, 0);
+                        Console.WriteLine("Ozirs health is now " + playerTwoHealth);
+                    } else if(playerOneAttack == "windblast" && playerOne.destructionSpellSlots >= 1)
+                    {
+                        playerOne.Windblast();
+                        Console.WriteLine("Ozir has taken 10 damage");
+                        playerTwoHealth = Math.Max(playerTwoHealth - 10, 0);
+                        Console.WriteLine("Ozirs health is now " + playerTwoHealth);
+                    } else if(playerOneAttack == "windblast" && playerOne.destructionSpellSlots < 1)
+                    {
+                        Console.WriteLine("\nYou don't have enoughs spell slots to use this spell.");
+                        Console.WriteLine("Meditate to regain spell slots.");
+                    }
+                } else if (playerOneMove == "heal") 
+                {
+                    // If the player inputs heal for their turn instead of attack then it skips to this part of the if statement
+                    // and heals the player.
+                    // In this game you can't heal over the amount of health you start with and the program accounts for that
+                    // by stopping the player from healing if the result of using the heal spell will put
+                    // them over their starting health amount. 
+                    if(playerOneHealth >= 96)
+                    {
+                        Console.WriteLine("\nYou can't heal past a wizards starting health.");
+                        Console.WriteLine("Alatars starting health is 100, and your current health is " + playerOneHealth + ".");
+                        playerOneHealth += 0;
+                    } else if(playerOneHealth < 96)
+                    {
+                        // This chunk of code is the process of the player actually getting healed
+                        // Healing also uses spell slots, so this follows the same process as the previous spells
+                        // to check if the player has enough spell slots. 
+                        if(playerOne.destructionSpellSlots >= 1)
+                        {
+                            Console.WriteLine("\n" + playerOne.destructionName + " is healing.\n+10 Health");
+                            Console.WriteLine("-1 Spell Slot");
+                            playerOne.destructionSpellSlots -= 1;
+                            Console.WriteLine("You have " + playerOne.destructionSpellSlots + " spell slots left\n");
+                            playerOneHealth += 10;
+                            Console.WriteLine("Alatars health is now " + playerOneHealth);
+                        } else if(playerOne.destructionSpellSlots < 1)
+                        {
+                            Console.WriteLine("\nYou don't have enoughs spell slots to use this spell.");
+                            Console.WriteLine("Meditate to regain spell slots.");
+                        }
+                    }
+                } else if (playerOneMove == "meditate")
+                {
+                    // If the user inputs meditate instead of attack or heal,
+                    // then the program skips to this part of the if statment
+                    // and calls the meditate method. 
+                    playerOne.DestructionMeditate();
+                } else if (playerOneMove != "attack" || playerOneMove != "heal" || playerOneMove != "meditate")
+                {
+                    // If the user wrongly types a word, and doesn't properly type
+                    // attack, heal, or meditate then they are shown this fun statement,
+                    // and their turn is over. 
+                    Console.WriteLine("Since you failed to properly type 'attack', 'heal', or 'meditate', you lose your turn.");
+                }
+
+                if(playerTwoHealth == 0)
+                {
+                    // If the opposing wizards health drops to 0 after an attack,
+                    // then these statements are shown
+                    // and the program breaks from this if statement and this while loop.
+                    Console.WriteLine("\n" + playerTwo.healingName + "s health is 0. The game is over.");
+                    Console.WriteLine("Player One has won.");
+                    break;
+                } 
+                
+                // Asks what the player will do 
+                // and then prompts the user to input what they would like to do
+                // and converts the input to all lower case.
+                Console.Write("\nWhat will " + playerTwo.healingName + " (player two) do: ");
+                string playerTwoMove = Console.ReadLine().ToLower();
+                
+                
+                if(playerTwoMove == "attack")
+                {
+                    // These two lines ask the reader to type in what attack they want to use
+                    // and stores the users input in a variable.
+                    Console.Write("Type Divine, Holynova, or Deathstrike to use an attack: ");
+                    string playerTwoAttack = Console.ReadLine().ToLower();
+                    
+                    // If the user inputs divine, and they have enough spell slots to use that spell,
+                    // then the program calls the divine method, states how much damage the opposing wizard has taken,
+                    // takes that health away from the opposing wizards health variable
+                    // and checks to see if the new health is below 0, then it displays
+                    // the opposing wizards health.
+                    // If the opposing wizard that is getting damaged has their health drop below 0 after an attack,
+                    // the variable that their health is stored in will default to 0, 
+                    // so that the program doesn't display the wizard having negative health. 
+                    // The program also checks for and has output predetermined for the user
+                    // if they try to use a spell that they don't have enough spell slots for.
+                    
+                    // This process is used for all other attacking spells that the player might use in their turn.
+                    if(playerTwoAttack == "divine")
+                    {
+                        playerTwo.Divine();
+                        Console.WriteLine("Alatar has taken 5 damage");
+                        playerOneHealth = Math.Max(playerOneHealth - 5, 0);
+                        Console.WriteLine("Alatars health is now " + playerOneHealth);
+                    } else if(playerTwoAttack == "holynova" && playerTwo.healingSpellSlots >= 1)
+                    {
+                        playerTwo.Holynova();
+                        Console.WriteLine("Alatar has taken 10 damage");
+                        playerOneHealth = Math.Max(playerOneHealth - 10, 0);
+                        Console.WriteLine("Alatars health is now " + playerOneHealth);
+                    } else if(playerTwoAttack == "holynova" && playerTwo.healingSpellSlots < 1)
+                    {
+                        Console.WriteLine("\nYou don't have enoughs spell slots to use this spell.");
+                        Console.WriteLine("Meditate to regain spell slots.");
+                    } else if (playerTwoAttack == "deathstrike" && playerTwo.healingSpellSlots == 4)
+                    {
+                        playerTwo.Deathstrike();
+                        Console.WriteLine("Alatar has taken 25 damage");
+                        playerOneHealth = Math.Max(playerOneHealth - 25, 0);
+                        Console.WriteLine("Alatars health is now " + playerOneHealth);
+                    } else if(playerTwoAttack == "deathstrike" && playerTwo.healingSpellSlots < 4)
+                    {
+                        Console.WriteLine("\nYou don't have enoughs spell slots to use this spell.");
+                        Console.WriteLine("Meditate to regain spell slots.");
+                    }
+                } else if (playerTwoMove == "heal")
+                {
+                    // If the player inputs heal for their turn instead of attack then it skips to this part of the if statement
+                    // and heals the player.
+                    // In this game you can't heal over the amount of health you start with and the program accounts for that
+                    // by stopping the player from healing if the result of using the heal spell will put
+                    // them over their starting health amount. 
+                    if(playerTwoHealth >= 96)
+                    {
+                        Console.WriteLine("\nYou can't heal past a wizards starting health.");
+                        Console.WriteLine(playerTwo.healingName + "s starting health is 100, and your current health is " + playerTwoHealth + ".");
+                    } else if(playerTwoHealth < 96)
+                    {
+                        // This chunk of code is the process of the player actually getting healed
+                        // Healing also uses spell slots, so this follows the same process as the previous spells
+                        // to check if the player has enough spell slots.
+                        if(playerTwo.healingSpellSlots >= 2)
+                        {
+                            Console.WriteLine("\n" + playerTwo.healingName + " is healing.\n+15 Health");
+                            Console.WriteLine("-2 Spell Slots");
+                            playerTwo.healingSpellSlots -= 2;
+                            Console.WriteLine("You have " + playerTwo.healingSpellSlots + " spell slots left\n");
+                            playerTwoHealth += 15;
+                            Console.WriteLine("Ozirs health is now " + playerTwoHealth);
+                        } else if(playerTwo.healingSpellSlots < 2)
+                        {
+                            Console.WriteLine("\nYou don't have enoughs spell slots to use this spell.");
+                            Console.WriteLine("Meditate to regain spell slots.");   
+                        }
+                    }
+                } else if (playerTwoMove == "meditate")
+                {
+                    // If the user inputs meditate instead of attack or heal,
+                    // then the program skips to this part of the if statment
+                    // and calls the meditate method. 
+                    playerTwo.HealingMeditate();
+                } else if (playerTwoMove != "attack" || playerTwoMove != "heal" || playerTwoMove != "meditate")
+                {
+                    // If the user wrongly types a word, and doesn't properly type
+                    // attack, heal, or meditate then they are shown this fun statement,
+                    // and their turn is over.
+                    Console.WriteLine("Since you failed to properly type 'attack', 'heal', or 'meditate', you lose your turn.");
+                }
+
+                if(playerOneHealth <= 0)
+                {
+                    // If the opposing wizards health drops to 0 after an attack,
+                    // then these statements are shown
+                    // and the program breaks from this if statement and this while loop.
+                    Console.WriteLine("\n" + playerOne.destructionName + "s health is 0. The game is over.");
+                    Console.WriteLine("Player Two has won.");
+                    break;
+                } 
+            }
+
+            // Makes so there is a pause before program closes after a player wins.
+            // Pause ends when someone clicks a key.
+            Console.ReadKey();
+        }
+    }
+}
