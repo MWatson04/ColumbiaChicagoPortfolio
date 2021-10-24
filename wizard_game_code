@@ -162,7 +162,6 @@ namespace WizardGameCCP
             Console.WriteLine("Turns will alternate, and making any move during your turn will use up that turn.");
             Console.WriteLine("To make a move during your turn, you type Attack, Heal, or Meditate.");
             Console.WriteLine("Attacking allows you to use a spell that deals damage, healing allows you to restore some of your wizards health, and meditating allows you to restore some of your wizards spell slots.");
-            Console.WriteLine("\nNOTICE: You can type 'Help' at any point during the game to get more information about your wizard.");
             Console.WriteLine("\nThe game is now starting.");
             Console.WriteLine("\nBegin.");
            
