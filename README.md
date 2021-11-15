@@ -1,6 +1,3 @@
-The 3 games I made in for my portfolio are named, "The Endless Fight", "Plant The Tree", and "The Wizards Duel".
-For the files containing each games respective code, they will be prefixed with abbreviated versions of the name of each game. 
-"The Endless Fight" code files will be prefixed with "tef", "Plant The Tree" code files will be prefixed with "plt",
-and the "The Wizards Duel" code file will be prefixed with "twd".
-Also, "The Endless Fight" code files will be have a "1" before the prefix, "Plant The Tree" code files will have a 2, and "The Wizards Duel" will have a 3. 
-This is to show the code files that I believe best represent my ability as a programmer at the top of the repository file list.
+In the "Plant The Tree" and the "The Endless Fight" folders, there will be 3 files in each that are prefixed with "1", "2", and "3".
+This is for me to show and put at the top, the code that I believe best represent my ability as a programmer.
+However, you should of course feel free to look through any of the files in any of the folders.
