@@ -14,14 +14,16 @@ namespace WizardGameCCP
         // Allows player to restore their spell slots and accounts for any errors      
         public void DestructionMeditate()
         {
-            if(destructionSpellSlots < 4)
+            if (destructionSpellSlots < 4)
             {
                 destructionSpellSlots += 3;
                 Console.WriteLine("\n" + destructionName + " is meditating.\nAlatars spell slots have gone up to " + destructionSpellSlots);
-            } else if(destructionSpellSlots == 6)
+            } 
+            else if (destructionSpellSlots == 6)
             {
                 Console.WriteLine("\nYou are at max spell slots. You can't meditate.");
-            } else if (destructionSpellSlots > 4 && destructionSpellSlots < 6)
+            } 
+            else if (destructionSpellSlots > 4 && destructionSpellSlots < 6)
             {
                 Console.WriteLine("\nYou cannot meditate past 6 spell slots.");
                 Console.WriteLine("Alatar can only meditate if they are below 4 spell slots");
@@ -34,18 +36,18 @@ namespace WizardGameCCP
         // The method also stores the new amount of spell slots the player actually has after using the method.
         public void Firebolt()
         {
-                Console.WriteLine("\n" + destructionName + " uses firebolt for 15 damage");
-                Console.WriteLine("-2 Spell Slot");
-                destructionSpellSlots -= 2;
-                Console.WriteLine("You have " + destructionSpellSlots + " spell slots left\n");
+            Console.WriteLine("\n" + destructionName + " uses firebolt for 15 damage");
+            Console.WriteLine("-2 Spell Slot");
+            destructionSpellSlots -= 2;
+            Console.WriteLine("You have " + destructionSpellSlots + " spell slots left\n");
         }
 
         public void Snowball()
         {
-                Console.WriteLine("\n" + destructionName + " uses snowball for 10 damage");
-                Console.WriteLine("-1 Spell Slot");
-                destructionSpellSlots -= 1;
-                Console.WriteLine("You have " + destructionSpellSlots + " spell slots left\n");
+            Console.WriteLine("\n" + destructionName + " uses snowball for 10 damage");
+            Console.WriteLine("-1 Spell Slot");
+            destructionSpellSlots -= 1;
+            Console.WriteLine("You have " + destructionSpellSlots + " spell slots left\n");
         }
 
         public void Shock()
@@ -58,10 +60,10 @@ namespace WizardGameCCP
 
         public void Windblast()
         {
-                Console.WriteLine("\n" + destructionName + " uses windblast for 10 damage");
-                Console.WriteLine("-1 Spell Slot");
-                destructionSpellSlots -= 1;
-                Console.WriteLine("You have " + destructionSpellSlots + " spell slots left\n");
+            Console.WriteLine("\n" + destructionName + " uses windblast for 10 damage");
+            Console.WriteLine("-1 Spell Slot");
+            destructionSpellSlots -= 1;
+            Console.WriteLine("You have " + destructionSpellSlots + " spell slots left\n");
         }
     }
    
@@ -76,14 +78,16 @@ namespace WizardGameCCP
         // Allows player to restore their spell slots and accounts for any errors  
         public void HealingMeditate()
         {
-            if(healingSpellSlots < 3)
+            if (healingSpellSlots < 3)
             {
                 healingSpellSlots += 2;
                 Console.WriteLine("\n" + healingName + " is meditating.\nOzirs spell slots have gone up to " + healingSpellSlots);
-            } else if(healingSpellSlots == 4)
+            } 
+            else if (healingSpellSlots == 4)
             {
                 Console.WriteLine("\nYou are at max spell slots. You can't meditate.");
-            } else if (healingSpellSlots == 3)
+            } 
+            else if (healingSpellSlots == 3)
             {
                 Console.WriteLine("\nYou cannot meditate past 4 spell slots.");
                 Console.WriteLine("Ozir can only meditate if they are below 3 spell slots");
@@ -104,18 +108,18 @@ namespace WizardGameCCP
 
         public void Holynova()
         {
-                Console.WriteLine("\n" + healingName + " uses holynova for 10 damage");
-                Console.WriteLine("-1 Spell Slot");
-                healingSpellSlots -= 1;
-                Console.WriteLine("You have " + healingSpellSlots + " spell slots left\n");
+            Console.WriteLine("\n" + healingName + " uses holynova for 10 damage");
+            Console.WriteLine("-1 Spell Slot");
+            healingSpellSlots -= 1;
+            Console.WriteLine("You have " + healingSpellSlots + " spell slots left\n");
         }
 
         public void Deathstrike()
         {
-                Console.WriteLine("\n" + healingName + " uses deathstrike for 25 damage");
-                Console.WriteLine("-4 Spell Slots");
-                healingSpellSlots -= healingSpellSlots;
-                Console.WriteLine("You have " + healingSpellSlots + " spell slots left\n");
+            Console.WriteLine("\n" + healingName + " uses deathstrike for 25 damage");
+            Console.WriteLine("-4 Spell Slots");
+            healingSpellSlots -= healingSpellSlots;
+            Console.WriteLine("You have " + healingSpellSlots + " spell slots left\n");
         }
     }
    
@@ -123,7 +127,7 @@ namespace WizardGameCCP
     {
         static void Main(string[] args)
         {  
-            // Classes assigned to variables, playerOne and playerTwo for user control       
+            // Classes assigned to variables, playerOne and playerTwo, for user control       
             DestructionWizard playerOne = new DestructionWizard();
             HealingWizard playerTwo = new HealingWizard();
            
@@ -149,14 +153,14 @@ namespace WizardGameCCP
             int playerTwoHealth = 100;
             
             // Game loop
-            while(playerOneHealth > 0 && playerTwoHealth > 0)
+            while (playerOneHealth > 0 && playerTwoHealth > 0)
             {
                 // Gets player ones initial move 
                 Console.Write("\nWhat will " + playerOne.destructionName + " (player one) do: ");
                 string playerOneMove = Console.ReadLine().ToLower();
                 
                 // Used to determine player ones move
-                if(playerOneMove == "attack")
+                if (playerOneMove == "attack")
                 {
                     // Variable to store the kind of attack
                     Console.Write("Type Firebolt, Snowball, Shock, or Windblast to use an attack: ");
@@ -165,7 +169,7 @@ namespace WizardGameCCP
                     // Each spell, when used, calls their respective method and then displays info about player health
                     // Accounting for spell slots to actually use the spell is also done here
                     // This process is used for all other attacking spells that the player might use in their turn
-                    if(playerOneAttack == "firebolt" && playerOne.destructionSpellSlots >= 2)
+                    if (playerOneAttack == "firebolt" && playerOne.destructionSpellSlots >= 2)
                     {
                         playerOne.Firebolt();
                         Console.WriteLine("Ozir has taken 15 damage");
@@ -173,33 +177,39 @@ namespace WizardGameCCP
                         // This is used with the same purpose in all other cases for the turn
                         playerTwoHealth = Math.Max(playerTwoHealth - 15, 0);
                         Console.WriteLine("Ozirs health is now " + playerTwoHealth);
-                    } else if(playerOneAttack == "firebolt" && playerOne.destructionSpellSlots < 2)
+                    } 
+                    else if (playerOneAttack == "firebolt" && playerOne.destructionSpellSlots < 2)
                     {
                         Console.WriteLine("\nYou don't have enoughs spell slots to use this spell.");
                         Console.WriteLine("Meditate to regain spell slots.");
-                    } else if(playerOneAttack == "snowball" && playerOne.destructionSpellSlots >= 1)
+                    } 
+                    else if (playerOneAttack == "snowball" && playerOne.destructionSpellSlots >= 1)
                     {
                         playerOne.Snowball();
                         Console.WriteLine("Ozir has taken 10 damage");
                         playerTwoHealth = Math.Max(playerTwoHealth - 10, 0);
                         Console.WriteLine("Ozirs health is now " + playerTwoHealth);
-                    } else if(playerOneAttack == "snowball" && playerOne.destructionSpellSlots < 1)
+                    } 
+                    else if (playerOneAttack == "snowball" && playerOne.destructionSpellSlots < 1)
                     {
                         Console.WriteLine("\nYou don't have enoughs spell slots to use this spell.");
                         Console.WriteLine("Meditate to regain spell slots.");
-                    } else if(playerOneAttack == "shock")
+                    } 
+                    else if (playerOneAttack == "shock")
                     {
                         playerOne.Shock();
                         Console.WriteLine("Ozir has taken 5 damage");
                         playerTwoHealth = Math.Max(playerTwoHealth - 5, 0);
                         Console.WriteLine("Ozirs health is now " + playerTwoHealth);
-                    } else if(playerOneAttack == "windblast" && playerOne.destructionSpellSlots >= 1)
+                    } 
+                    else if (playerOneAttack == "windblast" && playerOne.destructionSpellSlots >= 1)
                     {
                         playerOne.Windblast();
                         Console.WriteLine("Ozir has taken 10 damage");
                         playerTwoHealth = Math.Max(playerTwoHealth - 10, 0);
                         Console.WriteLine("Ozirs health is now " + playerTwoHealth);
-                    } else if(playerOneAttack == "windblast" && playerOne.destructionSpellSlots < 1)
+                    } 
+                    else if (playerOneAttack == "windblast" && playerOne.destructionSpellSlots < 1)
                     {
                         Console.WriteLine("\nYou don't have enoughs spell slots to use this spell.");
                         Console.WriteLine("Meditate to regain spell slots.");
@@ -208,18 +218,20 @@ namespace WizardGameCCP
                     {
                         Console.WriteLine("\nUndetectable Input");
                     }
-                } else if (playerOneMove == "heal") 
+                } 
+                else if (playerOneMove == "heal") 
                 {
                     // Increases players health variable 
                     // Accounts for spell slots and current player health
-                    if(playerOneHealth >= 91)
+                    if (playerOneHealth >= 91)
                     {
                         Console.WriteLine("\nYou can't heal past a wizards starting health.");
                         Console.WriteLine("Alatars starting health is 100, and your current health is " + playerOneHealth + ".");
                         playerOneHealth += 0;
-                    } else if(playerOneHealth < 91)
+                    } 
+                    else if (playerOneHealth < 91)
                     {
-                        if(playerOne.destructionSpellSlots >= 1)
+                        if (playerOne.destructionSpellSlots >= 1)
                         {
                             Console.WriteLine("\n" + playerOne.destructionName + " is healing.\n+10 Health");
                             Console.WriteLine("-1 Spell Slot");
@@ -227,23 +239,26 @@ namespace WizardGameCCP
                             Console.WriteLine("You have " + playerOne.destructionSpellSlots + " spell slots left\n");
                             playerOneHealth += 10;
                             Console.WriteLine("Alatars health is now " + playerOneHealth);
-                        } else if(playerOne.destructionSpellSlots < 1)
+                        } 
+                        else if (playerOne.destructionSpellSlots < 1)
                         {
                             Console.WriteLine("\nYou don't have enoughs spell slots to use this spell.");
                             Console.WriteLine("Meditate to regain spell slots.");
                         }
                     }
-                } else if (playerOneMove == "meditate")
+                } 
+                else if (playerOneMove == "meditate")
                 {
                     // Calls Meditate method
                     playerOne.DestructionMeditate();
-                } else
+                } 
+                else
                 {
                     // Message for typos in a turn
-                    Console.WriteLine("Undetectable Input");
+                    Console.WriteLine("\nUndetectable Input");
                 }
 
-                if(playerTwoHealth == 0)
+                if (playerTwoHealth == 0)
                 {
                     // Game over statements and break from game loop
                     Console.WriteLine("\n" + playerTwo.healingName + "s health is 0. The game is over.");
@@ -256,7 +271,7 @@ namespace WizardGameCCP
                 string playerTwoMove = Console.ReadLine().ToLower();
                 
                 // Used to determine player twos move
-                if(playerTwoMove == "attack")
+                if (playerTwoMove == "attack")
                 {
                     // Variable to store the kind of attack
                     Console.Write("Type Divine, Holynova, or Deathstrike to use an attack: ");
@@ -265,7 +280,7 @@ namespace WizardGameCCP
                     // Each spell, when used, calls their respective method and then displays info about player health
                     // Accounting for spell slots to actually use the spell is also done here
                     // This process is used for all other attacking spells that the player might use in their turn.
-                    if(playerTwoAttack == "divine")
+                    if (playerTwoAttack == "divine")
                     {
                         playerTwo.Divine();
                         Console.WriteLine("Alatar has taken 5 damage");
@@ -273,43 +288,49 @@ namespace WizardGameCCP
                         // This is used with the same purpose in all other cases for the turn
                         playerOneHealth = Math.Max(playerOneHealth - 5, 0);
                         Console.WriteLine("Alatars health is now " + playerOneHealth);
-                    } else if(playerTwoAttack == "holynova" && playerTwo.healingSpellSlots >= 1)
+                    } 
+                    else if (playerTwoAttack == "holynova" && playerTwo.healingSpellSlots >= 1)
                     {
                         playerTwo.Holynova();
                         Console.WriteLine("Alatar has taken 10 damage");
                         playerOneHealth = Math.Max(playerOneHealth - 10, 0);
                         Console.WriteLine("Alatars health is now " + playerOneHealth);
-                    } else if(playerTwoAttack == "holynova" && playerTwo.healingSpellSlots < 1)
+                    } 
+                    else if (playerTwoAttack == "holynova" && playerTwo.healingSpellSlots < 1)
                     {
                         Console.WriteLine("\nYou don't have enoughs spell slots to use this spell.");
                         Console.WriteLine("Meditate to regain spell slots.");
-                    } else if (playerTwoAttack == "deathstrike" && playerTwo.healingSpellSlots == 4)
+                    } 
+                    else if (playerTwoAttack == "deathstrike" && playerTwo.healingSpellSlots == 4)
                     {
                         playerTwo.Deathstrike();
                         Console.WriteLine("Alatar has taken 25 damage");
                         playerOneHealth = Math.Max(playerOneHealth - 25, 0);
                         Console.WriteLine("Alatars health is now " + playerOneHealth);
-                    } else if(playerTwoAttack == "deathstrike" && playerTwo.healingSpellSlots < 4)
+                    } 
+                    else if (playerTwoAttack == "deathstrike" && playerTwo.healingSpellSlots < 4)
                     {
                         Console.WriteLine("\nYou don't have enoughs spell slots to use this spell.");
                         Console.WriteLine("Meditate to regain spell slots.");
                     }
                     else
                     {
-                        Console.WriteLine("Undetectable Input");
+                        Console.WriteLine("\nUndetectable Input");
                     }
-                } else if (playerTwoMove == "heal")
+                } 
+                else if (playerTwoMove == "heal")
                 {
                     // Increases players health variable 
                     // Accounts for spell slots and current player health
-                    if(playerTwoHealth >= 86)
+                    if (playerTwoHealth >= 86)
                     {
                         Console.WriteLine("\nYou can't heal past a wizards starting health.");
                         Console.WriteLine(playerTwo.healingName + "s starting health is 100, and your current health is " + playerTwoHealth + ".");
                         playerTwoHealth += 0;
-                    } else if(playerTwoHealth < 86)
+                    } 
+                    else if (playerTwoHealth < 86)
                     {
-                        if(playerTwo.healingSpellSlots >= 2)
+                        if (playerTwo.healingSpellSlots >= 2)
                         {
                             Console.WriteLine("\n" + playerTwo.healingName + " is healing.\n+15 Health");
                             Console.WriteLine("-2 Spell Slots");
@@ -317,23 +338,26 @@ namespace WizardGameCCP
                             Console.WriteLine("You have " + playerTwo.healingSpellSlots + " spell slots left\n");
                             playerTwoHealth += 15;
                             Console.WriteLine("Ozirs health is now " + playerTwoHealth);
-                        } else if(playerTwo.healingSpellSlots < 2)
+                        } 
+                        else if (playerTwo.healingSpellSlots < 2)
                         {
                             Console.WriteLine("\nYou don't have enoughs spell slots to use this spell.");
                             Console.WriteLine("Meditate to regain spell slots.");   
                         }
                     }
-                } else if (playerTwoMove == "meditate")
+                } 
+                else if (playerTwoMove == "meditate")
                 {
                     // Calls Meditate method 
                     playerTwo.HealingMeditate();
-                } else if (playerTwoMove != "attack" || playerTwoMove != "heal" || playerTwoMove != "meditate")
+                } 
+                else
                 {
                     // Message for typos in a turn
-                    Console.WriteLine("Undetectable Input");
+                    Console.WriteLine("\nUndetectable Input");
                 }
 
-                if(playerOneHealth <= 0)
+                if (playerOneHealth <= 0)
                 {
                     // Game over statements and break from game loop
                     Console.WriteLine("\n" + playerOne.destructionName + "s health is 0. The game is over.");
