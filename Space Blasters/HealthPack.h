@@ -1,8 +1,6 @@
 #pragma once
 
-#include <iostream>
-
-#include <SFML/Graphics.hpp>
+include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 
@@ -20,6 +18,10 @@ public:
 
 	// Accessors
 	const sf::FloatRect GetGlobalBounds() const;
+	const sf::Vector2f& GetPosition() const;
+
+	// Modifier
+	void SetPosition(float pos_X, float pos_Y);
 
 	// Public Functions
 	void Update();
