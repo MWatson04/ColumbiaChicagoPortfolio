@@ -4,8 +4,8 @@
 // Private Functions
 void Player::InitializeVariables()
 {
-	movementSpeed				= 15.f;
-	attackCooldown				= 7.f;
+	movementSpeed				= 20.f;
+	attackCooldown				= 2.f;
 	timeSinceLastAttack			= attackCooldown;
 	points						= 0;
 	maxHealth					= 10;
