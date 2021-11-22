@@ -346,6 +346,7 @@ void Game::UpdateEnemies()
 			{
 				delete enemies[i];
 				enemies.erase(enemies.begin() + i);
+				player->SetCurrentHealth(1);
 
 				is_Enemy_Dead = true;
 			}
