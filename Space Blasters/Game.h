@@ -72,7 +72,7 @@ public:
   
 	// Accessors
 	const bool IsRunning() const;
-	const bool& GetEndGame() const;
+	const bool& GetGameOver() const;
   
 	// Public Functions
 	void PollEvents();
@@ -84,6 +84,7 @@ public:
 	void UpdatePlayer();
 	void UpdateEnemies();
 	void UpdateHealthBar();
+	void UpdateHealthPack();
 	void UpdateText();
 	void UpdateGameOver();
 	void Update();
