@@ -166,7 +166,7 @@ const bool Game::IsRunning() const
 	return window->isOpen();
 }
 
-const bool& Game::GetEndGame() const
+const bool& Game::GetGameOver() const
 {
 	return gameOver;
 }
@@ -294,14 +294,14 @@ void Game::UpdateEnemies()
 		timeWhenEnemySpawns -= 1.f;
 		speedTimer = 0.f;
 
-		if (newSpeed >= 15.f)
+		if (newSpeed >= 12.f)
 		{
-			newSpeed = 15.f;
+			newSpeed = 12.f;
 			speedTimer = 0.f;
 		}
 
-		if (timeWhenEnemySpawns <= 5.f)
-			timeWhenEnemySpawns = 5.f;
+		if (timeWhenEnemySpawns <= 8.f)
+			timeWhenEnemySpawns = 8.f;
 	}
 
 	// Spawn enemy
@@ -395,6 +395,26 @@ void Game::UpdateHealthBar()
 	}
 }
 
+void Game::UpdateHealthPack()
+{
+	// Move health pack fully in screen if it's not
+	for (size_t i = 0; i < healthPacks.size(); i++)
+	{
+		// Left
+		if (healthPacks[i]->GetPosition().x <= 0.f)
+			healthPacks[i]->SetPosition(0.f, healthPacks[i]->GetPosition().y);
+		// Right
+		if (healthPacks[i]->GetPosition().x + healthPacks[i]->GetGlobalBounds().width >= window->getSize().x)
+			healthPacks[i]->SetPosition(window->getSize().x - healthPacks[i]->GetGlobalBounds().width, healthPacks[i]->GetPosition().y);
+		// Top
+		if (healthPacks[i]->GetPosition().y <= 0.f)
+			healthPacks[i]->SetPosition(healthPacks[i]->GetPosition().x, 0.f);
+		// Bottom
+		if (healthPacks[i]->GetPosition().y + healthPacks[i]->GetGlobalBounds().height >= window->getSize().y)
+			healthPacks[i]->SetPosition(healthPacks[i]->GetPosition().x, window->getSize().y - healthPacks[i]->GetGlobalBounds().height);
+	}
+}
+
 void Game::UpdateText()
 {
 	// Convert string stream to a single string for rendering GUI
@@ -411,8 +431,11 @@ void Game::UpdateGameOver()
 	if (gameOver && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		gameOver = false;
-		
+
+		// Delete memory
 		delete window;
+		
+		// Restart game
 		InitializeVariables();
 		InitializeFonts();
 		InitializeText();
@@ -437,6 +460,7 @@ void Game::Update()
 		UpdateBullets();
 		UpdateEnemies();
 		UpdateHealthBar();
+		UpdateHealthPack();
 		UpdateText();
 	}
 
