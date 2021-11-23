@@ -24,6 +24,7 @@ public:
 
 	// Public sounds/music to play outside of class
 	sf::Music backgroundMusic;
+	sf::Music gameOverMusic;
 
 	sf::Sound gunshotSound;
 	sf::Sound healthPickupSound;
