@@ -28,9 +28,12 @@ void Audio::InitializeSounds()
 	// Set buffers to sound variable
 	gunshotSound.setBuffer(gunshotBuffer);
 	gunshotSound.setVolume(10.f);
+	
 	healthPickupSound.setBuffer(healthPickupBuffer);
+	
 	enemyDeathSound.setBuffer(enemyDeathBuffer);
 	enemyDeathSound.setVolume(20.f);
+	
 	gameOverSound.setBuffer(gameOverBuffer);
 }
 
