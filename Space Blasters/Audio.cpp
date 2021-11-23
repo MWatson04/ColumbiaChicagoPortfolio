@@ -4,10 +4,17 @@
 // Private functions
 void Audio::InitializeMusic()
 {
+	// Set main game music
 	if (!backgroundMusic.openFromFile("Audio/backgroundmusic.ogg"))
 		std::cout << "ERROR::AUDIO::MUSIC::BACKGROUNDMUSIC.OGG COULD NOT LOAD" << std::endl;
 
 	backgroundMusic.setLoop(true);
+
+	// Set music for when game over
+	if (!gameOverMusic.openFromFile("Audio/gameovermusic.ogg"))
+		std::cout << "ERROR::AUDIO::MUSIC::GAMEOVERMUSIC.OGG COULD NOT LOAD" << std::endl;
+
+	gameOverMusic.setLoop(true);
 }
 
 void Audio::InitializeSounds()
@@ -28,12 +35,12 @@ void Audio::InitializeSounds()
 	// Set buffers to sound variable
 	gunshotSound.setBuffer(gunshotBuffer);
 	gunshotSound.setVolume(10.f);
-	
+
 	healthPickupSound.setBuffer(healthPickupBuffer);
-	
+
 	enemyDeathSound.setBuffer(enemyDeathBuffer);
 	enemyDeathSound.setVolume(20.f);
-	
+
 	gameOverSound.setBuffer(gameOverBuffer);
 }
 
