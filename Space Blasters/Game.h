@@ -93,8 +93,7 @@ public:
 	void UpdateHealthPack();
 	void UpdateText();
 	void UpdateGameOver();
-	void UpdateBackgroundMusic();
-	void UpdateGameOverMusic();
+	void UpdateMusic();
 	void Update();
 	
 	void RenderWorld(sf::RenderTarget* target);
