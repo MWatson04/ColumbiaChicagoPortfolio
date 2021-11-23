@@ -299,7 +299,7 @@ void Game::UpdateEnemies()
 	speedTimer += 0.5f;
 	spawnTimer += 0.5f;
 	bool is_Enemy_Dead = false;
-	int randomValue = rand() % 100 + 1;
+	int randomNum = rand() % 100 + 1;
 
 	// Increase enemy speed and decrease time it takes for enemies to spawn as game goes on
 	if (speedTimer >= timeWhenSpeedIncreases)
@@ -356,7 +356,7 @@ void Game::UpdateEnemies()
 				is_Enemy_Dead = true;
 
 				// Create random chance for health pack to spawn when enemy dies
-				if (randomValue >= 95 && randomValue <= 100 && is_Enemy_Dead)
+				if (randomNum >= 95 && randomNum <= 100 && is_Enemy_Dead)
 				{
 					healthPacks.push_back(new HealthPack(textures["HEALTHPACK"], dead_Enemy_Position.x, dead_Enemy_Position.y));
 				}
