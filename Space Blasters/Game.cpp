@@ -119,6 +119,11 @@ void Game::InitializeBackgroundMusic()
 	audio.backgroundMusic.play();
 }
 
+void Game::InitializeGameOverMusic()
+{
+	audio.gameOverMusic.play();
+}
+
 // Constructor & Destructor
 Game::Game()
 {
@@ -291,6 +296,8 @@ void Game::UpdatePlayer()
 		audio.gameOverSound.play();
 
 		gameOver = true;
+
+		InitializeGameOverMusic();
 	}
 }
 
@@ -455,11 +462,25 @@ void Game::UpdateGameOver()
 		InitializeFonts();
 		InitializeText();
 		InitializeWindow();
+		InitializeHealthBar();
 		InitializeWorld();
 		InitializeTextures();
 		InitializePlayer();
 		InitializeEnemies();
+		InitializeBackgroundMusic();
 	}
+}
+
+void Game::UpdateBackgroundMusic()
+{
+	if (gameOver)
+		audio.backgroundMusic.stop();
+}
+
+void Game::UpdateGameOverMusic()
+{
+	if (!gameOver)
+		audio.gameOverMusic.stop();
 }
 
 void Game::Update()
@@ -477,6 +498,8 @@ void Game::Update()
 		UpdateHealthBar();
 		UpdateHealthPack();
 		UpdateText();
+		UpdateBackgroundMusic();
+		UpdateGameOverMusic();
 	}
 
 	if (gamePaused)
