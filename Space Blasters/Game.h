@@ -69,6 +69,7 @@ private:
 	void InitializePlayer();
 	void InitializeEnemies();
 	void InitializeBackgroundMusic();
+	void InitializeGameOverMusic();
   
 public:
 	// Constructor & Destructor
@@ -92,6 +93,8 @@ public:
 	void UpdateHealthPack();
 	void UpdateText();
 	void UpdateGameOver();
+	void UpdateBackgroundMusic();
+	void UpdateGameOverMusic();
 	void Update();
 	
 	void RenderWorld(sf::RenderTarget* target);
