@@ -1,5 +1,7 @@
-#include "Game.h"
 #include <ctime>
+
+#include "Game.h"
+
 
 int main()
 {
