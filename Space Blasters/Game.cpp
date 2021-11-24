@@ -222,7 +222,7 @@ void Game::UpdateInput()
 		player->MovePlayer(0.f, 1.f);
 
 	// Instantiate Bullet
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && player->CanAttack() && !gameOver)
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && player->CanAttack())
 	{
 		bullets.push_back(
 			new Bullet(textures["BULLET"], 
@@ -516,7 +516,6 @@ void Game::Update()
 
 	if (!gameOver && !gamePaused)
 	{
-		UpdateGameOver();
 		UpdatePause();
 		UpdateInput();
 		UpdatePlayer();
@@ -525,6 +524,7 @@ void Game::Update()
 		UpdateHealthBar();
 		UpdateHealthPack();
 		UpdateText();
+		UpdateGameOver();
 		UpdateMusic();
 	}
 
