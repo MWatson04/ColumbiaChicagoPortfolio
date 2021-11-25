@@ -252,7 +252,6 @@ void Game::UpdateBullets()
 			// Delete bullet
 			delete bullets.at(bullet_Element);
 			bullets.erase(bullets.begin() + bullet_Element);
-			--bullet_Element;
 		}
 
 		++bullet_Element;
