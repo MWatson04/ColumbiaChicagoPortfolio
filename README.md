@@ -1,3 +1,3 @@
-In the "Plant The Tree", "Ruination", and the "Space Blasters" folders, there will be at most 3 files in each that are prefixed with "1", "2", or "3".
-This is for me to show and put at the top the code that I believe best represents my ability as a programmer.
-However, you should of course feel free to look through any of the files in any of the folders.
+Columbia Chicago College portfolio.
+Contains code for 3 projects in my portfolio as well as any other files that go with each program.
+This includes any resources such as audio and art that I didn't create and any downloadable files for the programs.
