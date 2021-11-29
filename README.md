@@ -4,3 +4,7 @@ To be submitted by: January 19th, 2022
 
 This repository contains the code for the 3 projects in my portfolio (separated into folders) as well as any other files that go with each program.
 This includes any resources such as audio and art that I didn't create and any downloadable files for the programs.
+
+The projects in this repository include Plant The Tree, somewhat of a Super Mario clone made in Unity with C#, 
+Space Blasters, a Space Invaders clone made in VS Community 2019 and made with C++ and SFML, and 
+Raycaster, a game engine that utilizes raycasting and made with C++ and OpenGL.
