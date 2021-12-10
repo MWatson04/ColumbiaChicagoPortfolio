@@ -312,12 +312,12 @@ void Engine::DrawRays()
 		wallOffsetY = (WINDOW_HEIGHT / 2) - (wallStripHeight / 2);
 
 		// Draw lines for walls using OpenGL
-		glLineWidth(8.0f);                                                          // Draw lines every 8th pixel
+		glLineWidth(8.0f);                                        // Draw lines every 8th pixel
 		glBegin(GL_LINES);
-		glVertex2f(ray * 8 + (WINDOW_WIDTH / 3.2), wallOffsetY);                    // Start drawing walls on right half of screen
-		glVertex2f(ray * 8 + (WINDOW_WIDTH / 3.2), wallStripHeight + wallOffsetY);  // Draw walls from 0 (top of screen) to line_Height (bottom of screen at max line_Height)
+		glVertex2f(ray * 8 + (WINDOW_WIDTH / 3.2), wallOffsetY);  // Start drawing walls on right half of screen
+		glVertex2f(ray * 8 + (WINDOW_WIDTH / 3.2), 
+			wallStripHeight + wallOffsetY);                   // Draw walls from 0 (top of screen) to line_Height (bottom of screen at max line_Height)
 		glEnd();
-
 		// Draws every new ray one degree to the right of the previous one
 		// Without this, the rays would all draw on top of each other
 		rayAngle += ONE_DEG_IN_RAD / 2;
