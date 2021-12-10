@@ -366,7 +366,7 @@ bool Engine::PlayerMoveForward()
 	a_PlayerCollOffsetY = (playerPosY + offsetFromWallY) / cellSize2D;
 	s_PlayerCollOffsetY = (playerPosY - offsetFromWallY) / cellSize2D;
 
-	// Check if player is in empty space in the map when moving forward
+	// Check if player is moving forward to an empty space in the map
 	if (worldMap[(playerMapPosY * mapSizeX) + a_PlayerCollOffsetX] == 0 
 		&& worldMap[(a_PlayerCollOffsetY * mapSizeX) + playerMapPosX] == 0)
 	{
@@ -378,6 +378,7 @@ bool Engine::PlayerMoveForward()
 
 bool Engine::PlayerMoveBackward()
 {
+	// Check if player is moving backward to an empty space in the map
 	if (worldMap[(playerMapPosY * mapSizeX) + s_PlayerCollOffsetX] == 0
 		&& worldMap[(s_PlayerCollOffsetY * mapSizeX) + playerMapPosX] == 0)
 	{
@@ -400,7 +401,7 @@ void Engine::KeyInput(unsigned char& key, int& x, int& y)
 		if (playerAngle < 0)
 			playerAngle += TWO_PI;
 
-		playerDeltaRotX = cos(playerAngle) * 5;  // Calculate cos and sin to get change in player rotation
+		playerDeltaRotX = cos(playerAngle) * 5;  // Calculate cos and sin to get x and y change in player rotation
 		playerDeltaRotY = sin(playerAngle) * 5;
 	}
 
