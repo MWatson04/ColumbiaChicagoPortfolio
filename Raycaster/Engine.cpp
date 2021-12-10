@@ -182,9 +182,10 @@ void Engine::DrawWalls()
 
 		while (depthOfRay < 12)
 		{
-			// Take rays hit position and divide it by 32 to get position in worldMap array
+			// Take rays hit position and divides by 32 to get value that can be stored as a position in the map array
 			r_MapPosX = (int)(rayPosX) >> 4;
 			r_MapPosY = (int)(rayPosY) >> 4;
+			// Use x and y rays position to store a position in map array
 			mapPosition = r_MapPosY * mapSizeX + r_MapPosX;
 
 			// Check if mapPosition is in array and then check what its value is
