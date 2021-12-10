@@ -1,7 +1,6 @@
 #include "Engine.h"
 
-int door;
-// Init worldMap here for full file scope
+/ Init worldMap here for full file scope
 int worldMap[] =
 {
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
