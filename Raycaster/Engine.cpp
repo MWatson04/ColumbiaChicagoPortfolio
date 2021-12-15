@@ -1,5 +1,7 @@
 #include "Engine.h"
 
+#include "Textures/all_textures.ppm.bak"
+
 
 // To be used to control key state for player actions
 typedef struct KeyState
@@ -8,23 +10,22 @@ typedef struct KeyState
 };
 KeyState Keys;  // Struct instance
 
-// Init worldMap here for full file scope
-int worldMap[] =
+// Init wallMap here for full file scope
+int wallMap[] =
 {
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-	1, 0, 3, 0, 0, 3, 0, 0, 0, 0, 0, 1,
-	1, 0, 3, 0, 0, 3, 0, 0, 2, 0, 0, 1,
+	1, 0, 3, 0, 0, 3, 0, 0, 0, 0, 2, 1,
+	1, 0, 3, 0, 0, 3, 0, 0, 5, 0, 0, 1,
 	1, 0, 3, 4, 3, 3, 0, 0, 0, 0, 0, 1,
 	1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
 	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 	1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 1, 0, 0, 2, 0, 0, 3, 3, 3, 1,
+	1, 0, 1, 0, 0, 6, 0, 0, 3, 3, 3, 1,
 	1, 0, 1, 0, 0, 0, 0, 0, 3, 0, 0, 1,
 	1, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 1,
 	1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 1,
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 };
-
 
 // Used to return distance between player and rays end point
 float Engine::Distance(float ax, float ay, float bx, float by)
@@ -32,23 +33,6 @@ float Engine::Distance(float ax, float ay, float bx, float by)
 	// Pythagorean theorem
 	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
 }
-
-/*
-	The function below is commented out along with everything relating to this function
-	because when I implemented it to use with my player movement,
-	it made the game feel blocky and there were lag spikes, and I don't have
-	time to fix it before the submission deadline. However, I'm leaving this in here commented because 
-	while this project is being used for my portfolio, I still plan on working on it 
-	as a personal project afterwards and coming back and fixing the problem I currently have.
-*/
-/*float Engine::GetDeltaTime()
-{
-	newFrame = glutGet(GLUT_ELAPSED_TIME);
-	deltaTime = (newFrame - oldFrame) / 10.0f;
-	oldFrame = newFrame;
-
-	return deltaTime;
-}*/
 
 void Engine::InitGame()
 {
@@ -62,10 +46,10 @@ void Engine::InitGame()
 	offsetFromWallY = 0;
 	playerMapPosX = 0;
 	playerMapPosY = 0;
-	add_PlayerCollOffsetX = 0;
-	sub_PlayerCollOffsetX = 0;
-	add_PlayerCollOffsetY = 0;
-	sub_PlayerCollOffsetY = 0;
+	pPosX_add_OffsetX = 0;
+	pPosX_sub_OffsetX = 0;
+	pPosY_add_OffsetY = 0;
+	pPosY_sub_OffsetY = 0;
 
 	// Map variables
 	m_MapPosX = 0;
@@ -94,32 +78,62 @@ void Engine::InitGame()
 	correctAngLen = 0.0f;
 	wallStripHeight = 0.0f;
 	wallOffsetY = 0.0f;
-	xStep = 0.0f;
-	yStep = 0.0f;
+	stepX = 0.0f;
+	stepY = 0.0f;
+
+	// Textures
+	shade = 0.0f;
+	texturePosY = 0.0f;
+	textureStepY = 0.0f;
+	textureOffsetY = 0.0f;
+	texturePosX = 0.0f;
+	horizMapTexture = 0;
+	vertMapTexture = 0;
+	pixel = 0;
+	redValue = 0;
+	greenValue = 0;
+	blueValue = 0;
 
 	// Math
 	negInvTan = 0.0f;
 	negTan = 0.0f;
+	frameOne = 0.0f;
+	frameTwo = 0.0f;
+	deltaTime = 0.0f;
+}
+
+float Engine::GetDeltaTime()
+{
+	frameTwo = glutGet(GLUT_ELAPSED_TIME);
+	deltaTime = (frameTwo - frameOne);
+	frameOne = frameTwo;
+
+	return deltaTime;
 }
 
 // Draw 2D map to be used as mini map for player
-void Engine::DrawWorldMap()
+void Engine::DrawMap()
 {
 	// Go through map positions and draw map
 	for (m_MapPosY = 0; m_MapPosY < mapSizeY; m_MapPosY++)
 	{
 		for (m_MapPosX = 0; m_MapPosX < mapSizeX; m_MapPosX++)
 		{
-			if (worldMap[m_MapPosY * mapSizeX + m_MapPosX] == 1)
-				glColor3f(1.0f, 0.0f, 0.0f);                           // Red for walls
-			else if (worldMap[m_MapPosY * mapSizeX + m_MapPosX] == 2)
-				glColor3f(0.0f, 1.0f, 0.0f);                           // Green for pillars
-			else if (worldMap[m_MapPosY * mapSizeX + m_MapPosX] == 3)
-				glColor3f(0.0f, 0.0f, 1.0f);                           // Blue for rooms
-			else if (worldMap[m_MapPosY * mapSizeX + m_MapPosX] == 4)
-				glColor3f(1.0f, 1.0f, 0.0f);                           // Yellow for doors
+			if (wallMap[m_MapPosY * mapSizeX + m_MapPosX] == 1)
+				glColor3f(1.0f, 0.0f, 0.0f);                           // Red for first texture in allTextures[]
+			else if (wallMap[m_MapPosY * mapSizeX + m_MapPosX] == 2)
+				glColor3f(0.0f, 1.0f, 0.0f);                           // Green for second texture in allTextures[]
+			else if (wallMap[m_MapPosY * mapSizeX + m_MapPosX] == 3)
+				glColor3f(0.0f, 0.0f, 1.0f);                           // Blue for third texture in allTextures[]
+			else if (wallMap[m_MapPosY * mapSizeX + m_MapPosX] == 4)
+				glColor3f(1.0f, 1.0f, 0.0f);                           // Yellow for fourth texture in allTextures[] (Doors)
+			else if (wallMap[m_MapPosY * mapSizeX + m_MapPosX] == 5)
+				glColor3f(0.0f, 1.0f, 1.0f);                           // Cyan for sixth texture in allTextures[]
+			else if (wallMap[m_MapPosY * mapSizeX + m_MapPosX] == 6)
+				glColor3f(1.0f, 0.0f, 1.0f);                           // Pink for sixth texture in allTextures[]
 			else
 				glColor3f(0.3f, 0.3f, 0.3f);                           // Grey for empty space
+
 
 			// Use offsets to draw cells with an offset to each other that corresponds to the cells size
 			mapOffsetX = m_MapPosX * cellSize2D;
@@ -136,27 +150,33 @@ void Engine::DrawWorldMap()
 	}
 }
 
-// Create, make checks for, and display rays to make "3D" world
-void Engine::DrawWalls()
+void Engine::DrawFloor()
 {
-	// Set "sky" color before casting rays so it gets drawn over
-	glColor3f(0.0f, 0.7f, 0.9f); 
-	glBegin(GL_QUADS); 
-	glVertex2i(0, 0);
-	glVertex2i(0, WINDOW_HEIGHT / 2);
-	glVertex2i(WINDOW_WIDTH, WINDOW_HEIGHT / 2);
-	glVertex2i(WINDOW_WIDTH, 0);
-	glEnd();
-
 	// Set "floor" color before casting rays so it gets drawn over
-	glColor3f(0.2f, 0.2f, 0.2f); 
-	glBegin(GL_QUADS); 
+	glColor3f(0.2f, 0.2f, 0.2f);
+	glBegin(GL_QUADS);
 	glVertex2i(0, WINDOW_HEIGHT / 2);
 	glVertex2i(0, WINDOW_HEIGHT);
 	glVertex2i(WINDOW_WIDTH, WINDOW_HEIGHT);
 	glVertex2i(WINDOW_WIDTH, WINDOW_HEIGHT / 2);
 	glEnd();
+}
 
+void Engine::DrawCeiling()
+{
+	// Set "sky" color before casting rays so it gets drawn over
+	glColor3f(0.0f, 0.7f, 0.9f);
+	glBegin(GL_QUADS);
+	glVertex2i(0, 0);
+	glVertex2i(0, WINDOW_HEIGHT / 2);
+	glVertex2i(WINDOW_WIDTH, WINDOW_HEIGHT / 2);
+	glVertex2i(WINDOW_WIDTH, 0);
+	glEnd();
+}
+
+// Create, make checks for, and display rays to make "3D" world
+void Engine::DrawWalls()
+{
 	// Push the start of the rays to the left by 30 degrees
 	rayAngle = playerAngle - (ONE_DEG_IN_RAD * 30);
 	if (rayAngle < 0)
@@ -182,8 +202,8 @@ void Engine::DrawWalls()
 			rayPosX = (playerPosY - rayPosY) * negInvTan + playerPosX;
 
 			// Go to next horizontal x and y position
-			yStep = -cellSize2D;
-			xStep = -yStep * negInvTan;
+			stepY = -cellSize2D;
+			stepX = -stepY * negInvTan;
 		}
 
 		if (rayAngle < PI)  // Check if ray is looking down
@@ -193,8 +213,8 @@ void Engine::DrawWalls()
 			rayPosX = (playerPosY - rayPosY) * negInvTan + playerPosX;
 
 			// Go to next horizontal x and y position
-			yStep = cellSize2D;
-			xStep = -yStep * negInvTan;
+			stepY = cellSize2D;
+			stepX = -stepY * negInvTan;
 		}
 
 		if (rayAngle == 0 || rayAngle == PI)  // Check if ray is looking straight left or right
@@ -214,10 +234,12 @@ void Engine::DrawWalls()
 			mapPosition = r_MapPosY * mapSizeX + r_MapPosX;
 
 			// Check if mapPosition is in array and then check what its value is
-			if (mapPosition > 0 && mapPosition < mapSizeX * mapSizeY && worldMap[mapPosition] != 0)
+			if (mapPosition > 0 && mapPosition < mapSizeX * mapSizeY && wallMap[mapPosition] > 0)
 			{
+				horizMapTexture = wallMap[mapPosition] - 1;
+
 				// Store horizontal rays hit to use for coloring
-				horizRayMapPos = worldMap[mapPosition];
+				horizRayMapPos = wallMap[mapPosition];
 
 				// Wall has been hit
 				horizRayPosX = rayPosX;
@@ -230,8 +252,8 @@ void Engine::DrawWalls()
 			else  // Wall hasn't been hit
 			{
 				// Move to next horizontal x and y position 
-				rayPosX += xStep;
-				rayPosY += yStep;
+				rayPosX += stepX;
+				rayPosY += stepY;
 				depthOfRay += 1;
 			}
 		}
@@ -239,7 +261,7 @@ void Engine::DrawWalls()
 		// ---Check vertical line---
 		/*
 			This is the same as checking for a horizontal line except
-			all of the x and y values in the first two if 
+			all of the x and y values in the first two if
 			statements are flipped
 		*/
 		depthOfRay = 0;
@@ -253,8 +275,8 @@ void Engine::DrawWalls()
 			rayPosX = (((int)playerPosX >> 4) << 4) - 0.0001;
 			rayPosY = (playerPosX - rayPosX) * negTan + playerPosY;
 
-			xStep = -cellSize2D;
-			yStep = -xStep * negTan;
+			stepX = -cellSize2D;
+			stepY = -stepX * negTan;
 		}
 
 		if (rayAngle < PI_DIV_TWO || rayAngle > THREE_PI_DIV_TWO)  // Check if ray is looking right
@@ -262,8 +284,8 @@ void Engine::DrawWalls()
 			rayPosX = (((int)playerPosX >> 4) << 4) + cellSize2D;
 			rayPosY = (playerPosX - rayPosX) * negTan + playerPosY;
 
-			xStep = cellSize2D;
-			yStep = -xStep * negTan;
+			stepX = cellSize2D;
+			stepY = -stepX * negTan;
 		}
 
 		if (rayAngle == 0 || rayAngle == PI)  // Check if ray is looking straight up or down
@@ -279,9 +301,11 @@ void Engine::DrawWalls()
 			r_MapPosY = (int)(rayPosY) >> 4;
 			mapPosition = r_MapPosY * mapSizeX + r_MapPosX;
 
-			if (mapPosition > 0 && mapPosition < mapSizeX * mapSizeY && worldMap[mapPosition] != 0)
+			if (mapPosition > 0 && mapPosition < mapSizeX * mapSizeY && wallMap[mapPosition] > 0)
 			{
-				vertRayMapPos = worldMap[mapPosition];
+				vertMapTexture = wallMap[mapPosition] - 1;
+
+				vertRayMapPos = wallMap[mapPosition];
 
 				vertRayPosX = rayPosX;
 				vertRayPosY = rayPosY;
@@ -291,29 +315,24 @@ void Engine::DrawWalls()
 			}
 			else
 			{
-				rayPosX += xStep;
-				rayPosY += yStep;
+				rayPosX += stepX;
+				rayPosY += stepY;
 				depthOfRay += 1;
 			}
 		}
 
+		shade = 1.0f;  // Used to make darker and brighter walls with textures
 		// Set ray position to the vertical ray if the vertical ray is the shortest
 		if (vertRayDist < horizRayDist)
 		{
+			horizMapTexture = vertMapTexture;
+
+			shade = 0.5f;
+
 			rayPosX = vertRayPosX;
 			rayPosY = vertRayPosY;
 
 			finalRayDist = vertRayDist;
-
-			// Set "non-shaded" colors for vertical walls
-			if (vertRayMapPos == 1)
-				glColor3f(0.9f, 0.0f, 0.0f);
-			else if (vertRayMapPos == 2)
-				glColor3f(0.0f, 0.9f, 0.0f);
-			else if (vertRayMapPos == 3)
-				glColor3f(0.0f, 0.0f, 0.9f);
-			else if (vertRayMapPos == 4)
-				glColor3f(0.9f, 0.9f, 0.0f);
 		}
 
 		// Set ray position to the horizontal ray if the horizontal ray is the shortest
@@ -323,24 +342,7 @@ void Engine::DrawWalls()
 			rayPosY = horizRayPosY;
 
 			finalRayDist = horizRayDist;
-
-			// Set "shaded" colors for horizontal walls
-			if (horizRayMapPos == 1)
-				glColor3f(0.6f, 0.0f, 0.0f);
-			else if (horizRayMapPos == 2)
-				glColor3f(0.0f, 0.6f, 0.0f);
-			else if (horizRayMapPos == 3)
-				glColor3f(0.0f, 0.0f, 0.6f);
-			else if (horizRayMapPos == 4)
-				glColor3f(0.6f, 0.6f, 0.0f);
 		}
-
-		// Draw ray from player to where the ray has made a hit
-		glLineWidth(2.0f);
-		glBegin(GL_LINES);
-		glVertex2f(playerPosX, playerPosY);  // From player position
-		glVertex2f(rayPosX, rayPosY);        // To end of ray position
-		glEnd();
 
 		// ---Draw "3D" walls---
 		// Find distance between player angle and ray angle
@@ -354,19 +356,49 @@ void Engine::DrawWalls()
 
 		// Make walls that are farther away smaller, and closer walls bigger
 		wallStripHeight = (cellSize3D * WINDOW_HEIGHT) / finalRayDist;
+		textureStepY = textureSize / wallStripHeight; 
+		textureOffsetY = 0.0f;
 		if (wallStripHeight > WINDOW_HEIGHT)
+		{
+			textureOffsetY = (wallStripHeight - WINDOW_HEIGHT) / 2;
 			wallStripHeight = WINDOW_HEIGHT;
+		}
 
 		// Offset wall strips to center of screen on y axis
 		wallOffsetY = (WINDOW_HEIGHT / 2) - (wallStripHeight / 2);
 
-		// Draw lines for walls using OpenGL
-		glLineWidth(8.0f);                   // Draw lines every 8th pixel
-		glBegin(GL_LINES);
-		glVertex2f(ray * 8, wallOffsetY);    // Start drawing walls on right half of screen
-		glVertex2f(ray * 8, 
-			wallStripHeight + wallOffsetY);  // Draw walls from 0 (top of screen) to line_Height (bottom of screen at max line_Height)
-		glEnd();
+
+		// Texture walls
+		texturePosY = textureOffsetY * textureStepY;
+		texturePosX;
+		if (shade == 1)
+		{
+			texturePosX = (int)(rayPosX / 2) % textureSize;
+			if (rayAngle > PI)                                   // Depending on place of texture in the map, there are parts that might be flipped
+				texturePosX = (textureSize - 1) - texturePosX;   // This if statement checks for this and fixes it
+		}
+		else
+		{
+			texturePosX = (int)(rayPosY / 2) % textureSize;
+			if (rayAngle > PI_DIV_TWO && rayAngle < THREE_PI_DIV_TWO)
+				texturePosX = (textureSize - 1) - texturePosX;
+		}
+		for (int i = 0; i < wallStripHeight; i++)
+		{
+			pixel = ((int)texturePosY * textureSize + (int)texturePosX) * 3 + (horizMapTexture * textureSize * textureSize * 3);
+			redValue = allTextures[pixel - 1] * shade;
+			greenValue = allTextures[pixel + 0] * shade;
+			blueValue = allTextures[pixel + 1] * shade;
+
+			// Draw points in loop for walls using OpenGL
+			glPointSize(8.0f);                      // Draw points every 8th pixel
+			glColor3ub(redValue, greenValue, blueValue);
+			glBegin(GL_POINTS);
+			glVertex2f(ray * 8, i + wallOffsetY);
+			glEnd();
+
+			texturePosY += textureStepY;
+		}
 
 		// Draws every new ray one degree to the right of the previous one
 		// Without this, the rays would all draw on top of each other
@@ -397,13 +429,13 @@ void Engine::DrawPlayer()
 }
 
 // Setup wall collisions for player moving forward
-bool Engine::PlayerMoveForward()
+void Engine::PlayerCollisions()
 {
 	// Set up collision distance from player to wall
 	if (playerDeltaRotX < 0)
 		offsetFromWallX = -collisionDist;
 	else
-		offsetFromWallX = collisionDist; 
+		offsetFromWallX = collisionDist;
 
 	if (playerDeltaRotY < 0)
 		offsetFromWallY = -collisionDist;
@@ -413,28 +445,22 @@ bool Engine::PlayerMoveForward()
 	// Set players position in map with x and y offsets
 	playerMapPosX = playerPosX / cellSize2D;
 	playerMapPosY = playerPosY / cellSize2D;
-	// Set add and subtract variables to be used to check if theres a wall in front and behind the player
-	add_PlayerCollOffsetX = (playerPosX + offsetFromWallX) / cellSize2D;
-	sub_PlayerCollOffsetX = (playerPosX - offsetFromWallX) / cellSize2D;
-	add_PlayerCollOffsetY = (playerPosY + offsetFromWallY) / cellSize2D;
-	sub_PlayerCollOffsetY = (playerPosY - offsetFromWallY) / cellSize2D;
-
-	// Check if player is moving forward to an empty space in the map
-	if (worldMap[playerMapPosY * mapSizeX + add_PlayerCollOffsetX] == 0 
-		&& worldMap[add_PlayerCollOffsetY * mapSizeX + playerMapPosX] == 0)
-	{
-		return true;
-	}
-
-	return false;
+	// Set variables to be used to check the cell number in all directions from the player
+	pPosX_add_OffsetX = (playerPosX + offsetFromWallX) / cellSize2D;  // Divide by cell size to get position for map array
+	pPosX_sub_OffsetX = (playerPosX - offsetFromWallX) / cellSize2D;
+	pPosY_add_OffsetY = (playerPosY + offsetFromWallY) / cellSize2D;
+	pPosY_sub_OffsetY = (playerPosY - offsetFromWallY) / cellSize2D;
 }
 
 // Setup wall collisions for player moving backward
 bool Engine::PlayerMoveBackward()
 {
 	// Check if player is moving backward to an empty space in the map
-	if (worldMap[playerMapPosY * mapSizeX + sub_PlayerCollOffsetX] == 0
-		&& worldMap[sub_PlayerCollOffsetY * mapSizeX + playerMapPosX] == 0)
+	if (wallMap[playerMapPosY * mapSizeX + pPosX_sub_OffsetX] == 0)
+	{
+		return true;
+	}
+	if (wallMap[pPosY_sub_OffsetY * mapSizeX + playerMapPosX] == 0)
 	{
 		return true;
 	}
@@ -446,7 +472,7 @@ bool Engine::PlayerMoveBackward()
 bool Engine::OpenDoors()
 {
 	// Player can open the door if the map position in front of it is equal to 4
-	if (worldMap[add_PlayerCollOffsetY * mapSizeX + add_PlayerCollOffsetX] == 4)
+	if (wallMap[pPosY_add_OffsetY * mapSizeX + pPosX_add_OffsetX] == 4)
 	{
 		return true;
 	}
@@ -497,17 +523,18 @@ void Engine::KeyReleased(unsigned char& key, int& x, int& y)
 }
 
 // Player controller
+
+float frame1, frame2, fps;
 void Engine::KeyInput()
 {
-	bool can_Move_Forward = PlayerMoveForward();
-	bool can_Move_Backward = PlayerMoveBackward();
-	bool can_Open_Door = OpenDoors();
-	//float delta_Time = GetDeltaTime();
+	PlayerCollisions();
+	float delta_Time = GetDeltaTime();
+	//float frame2 = glutGet(GLUT_ELAPSED_TIME); fps = (frame2 - frame1); frame1 = glutGet(GLUT_ELAPSED_TIME);
 
 	// Rotate left or right and move forward or backward if in an empty space
 	if (Keys.a)
 	{
-		playerAngle -= lookSensitivity;
+		playerAngle -= lookSensitivity * delta_Time;
 
 		if (playerAngle < 0)
 			playerAngle += TWO_PI;
@@ -518,7 +545,7 @@ void Engine::KeyInput()
 
 	if (Keys.d)
 	{
-		playerAngle += lookSensitivity;
+		playerAngle += lookSensitivity * delta_Time;
 
 		if (playerAngle > TWO_PI)
 			playerAngle -= TWO_PI;
@@ -526,23 +553,41 @@ void Engine::KeyInput()
 		playerDeltaRotX = cos(playerAngle);
 		playerDeltaRotY = sin(playerAngle);
 	}
-	
-	if (Keys.w && can_Move_Forward)
+
+	if (Keys.w)
 	{
-		playerPosX += playerDeltaRotX * moveSpeed;  // Move player in direction based on players rotation angle
-		playerPosY += playerDeltaRotY * moveSpeed;
+		// Check if player is moving forward to an empty space in the map
+		if (wallMap[playerMapPosY * mapSizeX + pPosX_add_OffsetX] == 0)
+		{
+			playerPosX += playerDeltaRotX * moveSpeed * delta_Time;         // Move player in direction based on players rotation angle
+		}
+		if (wallMap[pPosY_add_OffsetY * mapSizeX + playerMapPosX] == 0)
+		{
+			playerPosY += playerDeltaRotY * moveSpeed * delta_Time;
+		}
 	}
 
-	if (Keys.s && can_Move_Backward)
+	if (Keys.s)
 	{
-		playerPosX -= playerDeltaRotX * moveSpeed;
-		playerPosY -= playerDeltaRotY * moveSpeed;
+		// Check if player is moving backward to an empty space in the map
+		if (wallMap[playerMapPosY * mapSizeX + pPosX_sub_OffsetX] == 0)
+		{
+			playerPosX -= playerDeltaRotX * moveSpeed * delta_Time;
+		}
+		if (wallMap[pPosY_sub_OffsetY * mapSizeX + playerMapPosX] == 0)
+		{
+			playerPosY -= playerDeltaRotY * moveSpeed * delta_Time;
+		}
 	}
 
 	// Open doors by setting space with door to 0 so it becomes empty
-	if (Keys.e && can_Open_Door)
+	if (Keys.e)
 	{
-		worldMap[add_PlayerCollOffsetY * mapSizeX + add_PlayerCollOffsetX] = 0;
+		// Player can open the door if the map position in front of it is equal to 4
+		if (wallMap[pPosY_add_OffsetY * mapSizeX + pPosX_add_OffsetX] == 4)
+		{
+			wallMap[pPosY_add_OffsetY * mapSizeX + pPosX_add_OffsetX] = 0;
+		}
 	}
 
 	glutPostRedisplay();
@@ -561,13 +606,13 @@ Engine::~Engine()
 
 void Engine::Render()
 {
-	//GetDeltaTime();
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	KeyInput();
+	DrawFloor();
+	DrawCeiling();
 	DrawWalls();
-	DrawWorldMap();
+	DrawMap();
 	DrawPlayer();
 
 	glutSwapBuffers();

@@ -24,18 +24,18 @@ private:
 	float playerDeltaRotX;
 	float playerDeltaRotY;
 	float playerAngle;
-	const float lookSensitivity = 0.0015f;
-	const float moveSpeed = 0.025f;
+	const float lookSensitivity = 0.0025f;
+	const float moveSpeed = 0.035f;
 	const float rotLineLen = 20.0f;
-	const float collisionDist = 1.0f;
+	const float collisionDist = 2.0f;
 	int offsetFromWallX;
 	int offsetFromWallY;
 	int playerMapPosX;
 	int playerMapPosY;
-	int add_PlayerCollOffsetX;
-	int sub_PlayerCollOffsetX;
-	int add_PlayerCollOffsetY;
-	int sub_PlayerCollOffsetY;
+	int pPosX_add_OffsetX;
+	int pPosX_sub_OffsetX;
+	int pPosY_add_OffsetY;
+	int pPosY_sub_OffsetY;
 
 	// Map variables
 	int m_MapPosX;
@@ -45,7 +45,7 @@ private:
 	const int mapSizeX = 12;
 	const int mapSizeY = 12;
 	const int cellSize2D = 16;
-	const int cellSize3D = 12;
+	const int cellSize3D = 16;
 
 	// Raycast variables
 	const int numOfRays = 161;
@@ -69,27 +69,43 @@ private:
 	float correctAngLen;
 	float wallStripHeight;
 	float wallOffsetY;
-	float xStep;
-	float yStep;
+	float stepX;
+	float stepY;
+
+	// Textures
+	float shade;
+	float texturePosY;
+	float textureStepY;
+	float textureOffsetY;
+	float texturePosX;
+	const int textureSize = 32;
+	int horizMapTexture;
+	int vertMapTexture;
+	int pixel;
+	int redValue;
+	int greenValue;
+	int blueValue;
 
 	// Math
 	float negInvTan;
 	float negTan;
-	float oldFrame;
-	float newFrame;
+	float frameOne;
+	float frameTwo;
 	float deltaTime;
 
 	// Functions
 	float Distance(float ax, float ay, float bx, float by);
-	//float GetDeltaTime();
+	float GetDeltaTime();
 
 	void InitGame();
-	void DrawWorldMap();
+	void DrawMap();
+	void DrawFloor();
+	void DrawCeiling();
 	void DrawWalls();
-	bool PlayerMoveForward();
+	void DrawPlayer();
+	void PlayerCollisions();
 	bool PlayerMoveBackward();
 	bool OpenDoors();
-	void DrawPlayer();
 
 public:
 	// Constructor & Destructor
