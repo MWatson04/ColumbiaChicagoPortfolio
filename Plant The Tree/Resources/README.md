@@ -6,4 +6,5 @@ I am simply using them to create a more visually appealing demonstration of this
 I was also able to find the links to the websites where I downloaded the resources I used.
 
 Art: https://assetstore.unity.com/packages/2d/environments/free-platform-game-assets-85838
+
 Music: https://www.chosic.com/free-music/all/
