@@ -523,13 +523,10 @@ void Engine::KeyReleased(unsigned char& key, int& x, int& y)
 }
 
 // Player controller
-
-float frame1, frame2, fps;
-void Engine::KeyInput()
+oid Engine::KeyInput()
 {
 	PlayerCollisions();
 	float delta_Time = GetDeltaTime();
-	//float frame2 = glutGet(GLUT_ELAPSED_TIME); fps = (frame2 - frame1); frame1 = glutGet(GLUT_ELAPSED_TIME);
 
 	// Rotate left or right and move forward or backward if in an empty space
 	if (Keys.a)
